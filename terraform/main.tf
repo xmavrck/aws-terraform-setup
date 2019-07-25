@@ -51,6 +51,8 @@ data "template_file" "inventory" {
     master_public_dns       = "${aws_instance.master_ec2[0].public_dns}"
     master_private_dns      = "${aws_instance.master_ec2[0].private_dns}"
     node_private_dns        = "${aws_instance.node_ec2[0].private_dns}"
+    replace_aws_secrets     = "${var.aws_secret_variable}"
+    replace_aws_access      = "${var.aws_access_variable}"
   }
 }
 
