@@ -69,7 +69,7 @@ resource "null_resource" "render_aws_keys" {
 }
 
 
-resource "null_resource" "deploy_okd_cluster" {
+resource "null_resource" "prepare_okd_cluster" {
   connection {
     type = "ssh"
     user = "root"
