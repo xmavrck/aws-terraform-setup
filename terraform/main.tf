@@ -59,3 +59,25 @@ resource "null_resource" "inventory_file" {
    command = "echo \"${data.template_file.inventory.rendered}\" > inventory"
   }
 }
+
+
+resource "null_resource" "deploy_okd_cluster" {
+  connection {
+    type = "ssh"
+    user = "root"
+    host = "${element(aws_instance.master_ec2.*.public_ip, count.index)}"
+    private_key = "${file("okd-cluster.pem")}"
+  }
+
+  provisioner "file" {
+    source      = "/opt/jenkins/workspace/deploy-okd-cluster/terraform/inventory"
+    destination = "/root/inventory"
+  }
+
+  provisioner "file" {
+    source      = "/opt/jenkins/workspace/deploy-okd-cluster/terraform/okd-cluster.pem"
+    destination = "/root/okd-cluster.pem"
+  }
+
+}
+
