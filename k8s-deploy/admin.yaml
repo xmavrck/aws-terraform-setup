@@ -1,0 +1,93 @@
+---
+# Source: admin/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: hero-flow-admin
+  namespace: heroflow
+  labels:
+    app.kubernetes.io/name: admin
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: remoting
+      protocol: TCP
+      name: remoting
+  selector:
+    app.kubernetes.io/name: admin
+    app: hero-flow-k8
+
+---
+# Source: admin/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hero-flow-admin
+  namespace: heroflow
+  labels:
+    app.kubernetes.io/name: admin
+    app: hero-flow-k8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: admin
+      app: hero-flow-k8
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: admin
+        app: hero-flow-k8
+    spec:
+      containers:
+        - name: admin
+          image: "saleshero/sflow-admin:latest"
+          imagePullPolicy: Always
+          env:
+            - name: "JAVA_OPTS"
+              value: "-Dconfig.resource=application-kubernetes.conf"
+            - name: "sf_storage_folder"
+              value: "/opt/sflow"
+            - name: "ah_snapshots_root"
+              value: "/opt/sflow/snapshots"
+            - name: "LOGFOLDER"
+              value: "/opt/sflow/logs/admin"
+            - name: "MONGODB_USER"
+              value: "dbuser0"
+            - name: "MONGODB_PASS"
+              value: "AWfatYm4"
+            - name: "MONGODB_NAME"
+              value: "db0"
+            - name: "MONGODB_HOST"
+              value: "mongodb.hero-flow.svc.cluster.local"
+            - name: "MONGODB_PORT"
+              value: "27017"
+            - name: "POD_IP"
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            # akka remoting
+            - name: remoting
+              containerPort: 2551
+              protocol: TCP
+            # When
+            # akka.management.cluster.bootstrap.contact-point-discovery.port-name
+            # is defined, it must correspond to this name:
+            - name: management
+              containerPort: 8558
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/sflow
+              name: ext-dir0
+      volumes:
+        - name: ext-dir0
+          persistentVolumeClaim:
+            claimName: app
+
+

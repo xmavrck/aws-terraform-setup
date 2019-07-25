@@ -1,0 +1,103 @@
+---
+# Source: node/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: hero-flow-node
+  namespace: heroflow
+  labels:
+    app.kubernetes.io/name: node
+spec:
+  type: ClusterIP
+  ports:
+    - port: 2552
+      targetPort: remoting
+      protocol: TCP
+      name: remoting
+  selector:
+    app.kubernetes.io/name: node
+
+---
+# Source: node/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hero-flow-node
+  namespace: heroflow
+  labels:
+    app.kubernetes.io/name: node
+    app: hero-flow-k8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: node
+      app: hero-flow-k8
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: node
+        app: hero-flow-k8
+    spec:
+      containers:
+        - name: node
+          image: "saleshero/sflow:latest"
+          imagePullPolicy: Always
+          env:
+            - name: "JAVA_OPTS"
+              value: "-Dconfig.resource=application-kubernetes.conf"
+            - name: "sf_storage_folder"
+              value: "/opt/sflow"
+            - name: "ah_snapshots_root"
+              value: "/opt/sflow/snapshots"
+            - name: "LOGFOLDER"
+              value: "/opt/sflow/logs/admin"
+            - name: "MONGODB_USER"
+              value: "dbuser0"
+            - name: "MONGODB_PASS"
+              value: "AWfatYm4"
+            - name: "MONGODB_NAME"
+              value: "db0"
+            - name: "MONGODB_HOST"
+              value: "mongodb.hero-flow.svc.cluster.local"
+            - name: "MONGODB_PORT"
+              value: "27017"
+            - name: "POD_IP"
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+          ports:
+            - name: remoting
+              containerPort: 2551
+              protocol: TCP
+            # When
+            # akka.management.cluster.bootstrap.contact-point-discovery.port-name
+            # is defined, it must correspond to this name:
+            - name: management
+              containerPort: 8558
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: management
+            initialDelaySeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: management
+            initialDelaySeconds: 45
+          volumeMounts:
+            - mountPath: /opt/sflow
+              name: ext-dir0
+            - mountPath: /dev/shm
+              name: media-driver
+      volumes:
+        - name: ext-dir0
+          persistentVolumeClaim:
+            claimName: app
+        - name: media-driver
+          emptyDir:
+            medium: Memory
+
+
+
