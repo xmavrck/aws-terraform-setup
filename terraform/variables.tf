@@ -51,4 +51,3 @@ variable "egress_cidr_blocks" {}
 # EC2 instance tags
 variable "Environment" {}
 variable "Service" {}
-variable "Product" {}
