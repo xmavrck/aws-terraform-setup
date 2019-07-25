@@ -70,12 +70,12 @@ resource "null_resource" "deploy_okd_cluster" {
   }
 
   provisioner "file" {
-    source      = "/opt/jenkins/workspace/deploy-okd-cluster/terraform/inventory"
+    source      = "inventory"
     destination = "/root/inventory"
   }
 
   provisioner "file" {
-    source      = "/opt/jenkins/workspace/deploy-okd-cluster/terraform/okd-cluster.pem"
+    source      = "okd-cluster.pem"
     destination = "/root/okd-cluster.pem"
   }
 
