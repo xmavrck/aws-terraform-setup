@@ -51,3 +51,8 @@ variable "egress_cidr_blocks" {}
 # EC2 instance tags
 variable "Environment" {}
 variable "Service" {}
+
+# AWS creds
+variable "aws_secret_variable" {}
+variable "aws_access_variable" {}
+
