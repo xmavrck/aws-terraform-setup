@@ -21,8 +21,8 @@ openshift_disable_check=memory_availability,disk_availability
 
 
 openshift_cloudprovider_kind=aws
-openshift_cloudprovider_aws_access_key=replace_aws_access
-openshift_cloudprovider_aws_secret_key=replace_aws_secrets
+openshift_cloudprovider_aws_access_key=${replace_aws_access}
+openshift_cloudprovider_aws_secret_key=${replace_aws_secrets}
 openshift_clusterid=OKD-3.11
 
 # host group for masters
