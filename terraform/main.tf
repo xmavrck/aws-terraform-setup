@@ -54,9 +54,17 @@ data "template_file" "inventory" {
   }
 }
 
+
 resource "null_resource" "inventory_file" {
   provisioner "local-exec" {
    command = "echo \"${data.template_file.inventory.rendered}\" > inventory"
+  }
+}
+
+
+resource "null_resource" "render_aws_keys" {
+  provisioner "local-exec" {
+   command = "sed -i 's/openshift_cloudprovider_aws_access_key=replace_aws_access/openshift_cloudprovider_aws_access_key=$AWS_ACCESS_KEY_ID/g' inventory && sed -i 's/openshift_cloudprovider_aws_secret_key=replace_aws_secrets/openshift_cloudprovider_aws_secret_key=$AWS_SECRET_ACCESS_KEY/g' inventory"
   }
 }
 
