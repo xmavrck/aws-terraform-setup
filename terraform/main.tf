@@ -65,7 +65,7 @@ resource "null_resource" "deploy_okd_cluster" {
   connection {
     type = "ssh"
     user = "root"
-    host = "${element(aws_instance.master_ec2[0].public_dns)}"
+    host = "${aws_instance.master_ec2[0].public_dns}"
     private_key = "${file("okd-cluster.pem")}"
   }
 
