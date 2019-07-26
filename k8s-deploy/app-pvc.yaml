@@ -9,4 +9,4 @@ spec:
   storageClassName: "nfs"
   resources:
     requests:
-      storage: 99Gi
+      storage: 90Gi
