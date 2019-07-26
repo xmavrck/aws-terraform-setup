@@ -57,12 +57,29 @@ data "template_file" "inventory" {
 }
 
 
+data "template_file" "aws_creds" {
+  depends_on = ["aws_instance.master_ec2","aws_instance.node_ec2"]
+  template = "${file("${path.module}/templates/credentials.tpl")}"
+
+  vars = {
+    replace_aws_secrets     = "${var.aws_secret_variable}"
+    replace_aws_access      = "${var.aws_access_variable}"
+  }
+}
+
+
 resource "null_resource" "inventory_file" {
   provisioner "local-exec" {
    command = "echo \"${data.template_file.inventory.rendered}\" > /tmp/inventory"
   }
 }
 
+
+resource "null_resource" "aws_file" {
+  provisioner "local-exec" {
+   command = "echo \"${data.template_file.aws_creds.rendered}\" > /tmp/credentials"
+  }
+}
 
 resource "null_resource" "prepare_okd_cluster" {
   connection {
@@ -80,6 +97,11 @@ resource "null_resource" "prepare_okd_cluster" {
   provisioner "file" {
     source      = "okd-cluster.pem"
     destination = "/root/okd-cluster.pem"
+  }
+
+  provisioner "file" {
+    source      = "/tmp/credentials"
+    destination = "/root/.aws/credentials"
   }
 
 }
@@ -105,6 +127,12 @@ resource "null_resource" "deploy_okd_cluster" {
     inline = [
       "chmod 400 /root/okd-cluster.pem",
       "ansible-playbook -i /root/inventory /openshift-ansible/playbooks/deploy_cluster.yml --key-file /root/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
+    ]
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "aws s3 cp /root/.kube/config s3://okd-cluster-state/"
     ]
   }
 }

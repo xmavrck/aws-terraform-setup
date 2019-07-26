@@ -13,8 +13,6 @@ master_count = "1"
 # number of Node ec2 instance
 node_count = "1"
 
-# resource instance type
-instance_type = "t2.large"
 
 # aws key pair name
 key_name = "okd-cluster"
@@ -22,8 +20,6 @@ key_name = "okd-cluster"
 # securiy group for ec2
 ec2_sec_group = "saleshero-okd-sg"
 
-# root volume size
-volume_size = "10"
 
 # Associate public ip address (true/false)
 public_ip = "true"
