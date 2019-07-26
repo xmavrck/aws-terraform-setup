@@ -5,7 +5,7 @@ region = "us-west-2"
 # EC2 VARIABLES
 
 # ami use with ec2
-ami = "ami-052e2f145c4002e3e"
+ami = "ami-0e85932f6878d621b"
 
 # number of Master ec2 instance
 master_count = "1"
