@@ -3,22 +3,17 @@ kind: StatefulSet
 metadata:
   labels:
     app: mongodb-replicaset
-    chart: mongodb-replicaset-3.9.6
-    heritage: Tiller
-    release: release-name
-  name: release-name-mongodb-replicaset
+  name: mongodb-replicaset
 spec:
   selector:
     matchLabels:
       app: mongodb-replicaset
-      release: release-name
-  serviceName: release-name-mongodb-replicaset
+  serviceName: mongodb-replicaset
   replicas: 3
   template:
     metadata:
       labels:
         app: mongodb-replicaset
-        release: release-name
       annotations:
         checksum/config: 7175e119dd516dd748878c440eccf7bfc94066e1c653fc7e93a078d46f950b2b
     spec:
@@ -71,7 +66,7 @@ spec:
             - /work-dir/peer-finder
           args:
             - -on-start=/init/on-start.sh
-            - "-service=release-name-mongodb-replicaset"
+            - "-service=mongodb-replicaset"
           imagePullPolicy: "IfNotPresent"
           env:
             - name: POD_NAMESPACE
@@ -88,12 +83,12 @@ spec:
             - name: ADMIN_USER
               valueFrom:
                 secretKeyRef:
-                  name: "release-name-mongodb-replicaset-admin"
+                  name: "mongodb-replicaset-admin"
                   key: user
             - name: ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "release-name-mongodb-replicaset-admin"
+                  name: "mongodb-replicaset-admin"
                   key: password
           volumeMounts:
             - name: workdir
@@ -160,15 +155,15 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: release-name-mongodb-replicaset-mongodb
+            name: mongodb-replicaset-mongodb
         - name: init
           configMap:
             defaultMode: 0755
-            name: release-name-mongodb-replicaset-init
+            name: mongodb-replicaset-init
         - name: keydir
           secret:
             defaultMode: 0400
-            secretName: release-name-mongodb-replicaset-keyfile
+            secretName: mongodb-replicaset-keyfile
         - name: workdir
           emptyDir: {}
         - name: configdir

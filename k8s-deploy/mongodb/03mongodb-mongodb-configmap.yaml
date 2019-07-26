@@ -3,10 +3,8 @@ kind: ConfigMap
 metadata:
   labels:
     app: mongodb-replicaset
-    chart: mongodb-replicaset-3.9.6
-    heritage: Tiller
-    release: release-name
-  name: release-name-mongodb-replicaset-mongodb
+  name: mongodb-replicaset-mongodb
+  namespace: heroflow
 data:
   mongod.conf: |
     {}
