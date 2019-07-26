@@ -5,3 +5,4 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDj8LvqIZC6N2yc8LbOkDalBN9M2hmq0udMn7
 git clone https://github.com/openshift/openshift-ansible
 cd openshift-ansible
 git checkout release-3.11
+mkdir /root/.aws
