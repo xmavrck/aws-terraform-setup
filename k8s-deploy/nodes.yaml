@@ -4,7 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hero-flow-node
-  namespace: heroflow
+  namespace: hero-flow
   labels:
     app.kubernetes.io/name: node
 spec:
@@ -23,7 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hero-flow-node
-  namespace: heroflow
+  namespace: hero-flow
   labels:
     app.kubernetes.io/name: node
     app: hero-flow-k8
@@ -59,7 +59,7 @@ spec:
             - name: "MONGODB_NAME"
               value: "db0"
             - name: "MONGODB_HOST"
-              value: "mongodb-replicaset-client"
+              value: "mongodb-replicaset-client.heroflow"
             - name: "MONGODB_PORT"
               value: "27017"
             - name: "POD_IP"
