@@ -4,7 +4,7 @@ metadata:
   labels:
     app: mongodb-replicaset
   name: mongodb-replicaset-init
-  namespace: heroflow
+  namespace: hero-flow
 data:
   on-start.sh: |
     #!/usr/bin/env bash

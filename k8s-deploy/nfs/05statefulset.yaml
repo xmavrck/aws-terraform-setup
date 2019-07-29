@@ -2,7 +2,7 @@ apiVersion: apps/v1beta2
 kind: StatefulSet
 metadata:
   name: nfs-server-provisioner
-  namespace: heroflow
+  namespace: hero-flow
   labels:
     app: nfs-server-provisioner
 spec:
