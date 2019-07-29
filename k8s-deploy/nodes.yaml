@@ -59,7 +59,7 @@ spec:
             - name: "MONGODB_NAME"
               value: "db0"
             - name: "MONGODB_HOST"
-              value: "mongodb-replicaset-client.heroflow"
+              value: "mongodb-replicaset-client"
             - name: "MONGODB_PORT"
               value: "27017"
             - name: "POD_IP"
