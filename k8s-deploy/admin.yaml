@@ -8,12 +8,12 @@ metadata:
   labels:
     app.kubernetes.io/name: admin
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 8080
-      targetPort: remoting
+      targetPort: 8080
       protocol: TCP
-      name: 8080
+      name: http
   selector:
     app.kubernetes.io/name: admin
     app: hero-flow-k8
