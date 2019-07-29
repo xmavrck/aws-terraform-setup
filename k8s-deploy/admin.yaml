@@ -13,7 +13,7 @@ spec:
     - port: 8080
       targetPort: remoting
       protocol: TCP
-      name: remoting
+      name: 8080
   selector:
     app.kubernetes.io/name: admin
     app: hero-flow-k8
