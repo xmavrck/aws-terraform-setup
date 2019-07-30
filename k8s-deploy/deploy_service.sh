@@ -9,7 +9,7 @@ openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/mongodb --kubeconfig ./config -n hero-flow
 if [ "${Deploy_First_Time_Services}" = 'true' ]; then {
 i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc  get sts -nhero-flow mongodb-replicaset -o jsonpath="{.status.readyReplicas}"  --kubeconfig ./config`
-while [ $i -le 1 ] || [ "$i" -eq "" ]
+while [ "$i" != "1" ] 
 do
     i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print $3}'`
     echo "Mongo DB is creating"
