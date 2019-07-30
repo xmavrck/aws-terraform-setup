@@ -8,10 +8,10 @@ openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-to-user nfs-provisioner system:serviceaccount:hero-flow:nfs-server-provisioner --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/mongodb --kubeconfig ./config -n hero-flow
 if [ "${Deploy_First_Time_Services}" = 'true' ]; then {
-i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print "${3}"}'`
+i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print $3}'`
 while [ "${i}" -ge 1 ]
 do
-	i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print "${3}"}'`
+    i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print $3}'`
     echo "Mongo DB is creating"
 done
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/db-setup.yaml -n hero-flow  --kubeconfig ./config 
