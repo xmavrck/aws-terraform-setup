@@ -40,7 +40,6 @@ spec:
         app.kubernetes.io/name: admin
         app: hero-flow-k8
     spec:
-      hostNetwork: true
       containers:
         - name: admin
           image: "saleshero/sflow-admin:latest"
