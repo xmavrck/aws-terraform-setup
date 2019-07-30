@@ -1,4 +1,12 @@
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: admin-sa
+  name: admin-sa
+  namespace: hero-flow
+---
 # Source: admin/templates/service.yaml
 apiVersion: v1
 kind: Service
@@ -40,6 +48,9 @@ spec:
         app.kubernetes.io/name: admin
         app: hero-flow-k8
     spec:
+      hostNetwork: true
+      serviceAccountName:
+        admin-sa
       containers:
         - name: admin
           image: "saleshero/sflow-admin:latest"
