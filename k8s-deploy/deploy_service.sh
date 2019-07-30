@@ -9,10 +9,11 @@ openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/mongodb --kubeconfig ./config -n hero-flow
 if [ "${Deploy_First_Time_Services}" = 'true' ]; then {
 i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print $3}'`
-while [ "${i}" -ge 1 ]
+while [ $i -ge 1 ]
 do
     i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc get sts -nhero-flow mongodb-replicaset  --kubeconfig ./config | awk 'FNR>1 {print $3}'`
     echo "Mongo DB is creating"
+    echo $i
 done
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/db-setup.yaml -n hero-flow  --kubeconfig ./config 
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc create secret docker-registry saleshero-registry-secret --docker-username=rzwodzwo --docker-password=8YTOqtGswl@h0vJs2wrgyGX7 --docker-email=r2d2@automationhero.ai -nhero-flow  --kubeconfig ./config 
