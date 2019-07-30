@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: setup-mongodb-database
+  labels:
+    app: setup-mongodb-database
+spec:
+  template:
+    metadata:
+      name: setup-mongodb-database
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: setup-mongodb-database
+        image: mongo:3.6
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        - -c
+        - "mongo -u dbadmin -p iwkXF4WtGGuAB-gcjbHKL7k7VAdkKS --eval \"db.getSiblingDB('db1').createUser({user: 'dbadmin', pwd: 'iwkXF4WtGGuAB-gcjbHKL7k7VAdkKS', roles: [ 'readWrite', 'dbAdmin' ]})\""
