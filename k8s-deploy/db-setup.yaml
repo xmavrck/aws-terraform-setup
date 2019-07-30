@@ -17,4 +17,4 @@ spec:
         command:
         - /bin/sh
         - -c
-        - "mongo -u dbadmin -p iwkXF4WtGGuAB-gcjbHKL7k7VAdkKS --eval \"db.getSiblingDB('db1').createUser({user: 'dbadmin', pwd: 'iwkXF4WtGGuAB-gcjbHKL7k7VAdkKS', roles: [ 'readWrite', 'dbAdmin' ]})\""
+        - "mongo --host mongodb-replicaset-client -u dbadmin -p iwkXF4WtGGuAB-gcjbHKL7k7VAdkKS --eval \"db.getSiblingDB('db0').createUser({user: 'dbadmin', pwd: 'iwkXF4WtGGuAB-gcjbHKL7k7VAdkKS', roles: [ 'readWrite', 'dbAdmin' ]})\""
