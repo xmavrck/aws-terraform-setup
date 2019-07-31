@@ -40,6 +40,10 @@ spec:
         app.kubernetes.io/name: admin
         app: hero-flow-k8
     spec:
+      securityContext:
+        fsGroup: 100
+        runAsNonRoot: true
+        runAsUser: 100
       containers:
         - name: admin
           image: "saleshero/sflow-admin:latest"
