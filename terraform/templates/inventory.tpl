@@ -6,7 +6,7 @@ etcd
 
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
-ansible_ssh_user=root
+ansible_ssh_user=centos
 ansible_become=yes
 openshift_deployment_type=origin
 
