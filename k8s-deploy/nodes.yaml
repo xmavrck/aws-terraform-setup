@@ -39,6 +39,10 @@ spec:
         app.kubernetes.io/name: node
         app: hero-flow-k8
     spec:
+      securityContext:
+        fsGroup: 100
+        runAsNonRoot: true
+        runAsUser: 100
       containers:
         - name: node
           image: "saleshero/sflow:latest"
