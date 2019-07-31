@@ -5,6 +5,7 @@ tar -xf openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/nfs/00namespace.yaml --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/nfs-scc.yaml --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/nfs/02ServiceAccount.yaml --kubeconfig ./config
+openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/service-account-roles.yaml --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-to-user nfs-provisioner system:serviceaccount:hero-flow:nfs-server-provisioner --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/mongodb --kubeconfig ./config -n hero-flow
 if [ "${Deploy_First_Time_Services}" = 'true' ]; then {
@@ -21,5 +22,4 @@ openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc patch sa default -p
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/nfs --kubeconfig ./config -n hero-flow
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/app-pvc.yaml --kubeconfig ./config -n hero-flow
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/admin.yaml --kubeconfig ./config -n hero-flow
-openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-to-user privileged -nhero-flow -z admin-sa  --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/nodes.yaml --kubeconfig ./config -n hero-flow
