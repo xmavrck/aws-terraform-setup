@@ -7,6 +7,7 @@ openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/nfs/02ServiceAccount.yaml --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/service-account-roles.yaml --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-to-user nfs-provisioner system:serviceaccount:hero-flow:nfs-server-provisioner --kubeconfig ./config
+openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc adm policy add-scc-to-user privileged  system:serviceaccount:hero-flow:default --kubeconfig ./config
 openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc apply -f k8s-deploy/mongodb --kubeconfig ./config -n hero-flow
 if [ "${Deploy_First_Time_Services}" = 'true' ]; then {
 i=`openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc  get sts -nhero-flow mongodb-replicaset -o jsonpath="{.status.readyReplicas}"  --kubeconfig ./config`
