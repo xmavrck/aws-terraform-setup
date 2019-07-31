@@ -86,24 +86,24 @@ resource "null_resource" "aws_file" {
 resource "null_resource" "prepare_okd_cluster" {
   connection {
     type = "ssh"
-    user = "root"
+    user = "centos"
     host = "${aws_instance.master_ec2[0].public_dns}"
     private_key = "${file("okd-cluster.pem")}"
   }
 
   provisioner "file" {
     source      = "/tmp/inventory"
-    destination = "/root/inventory"
+    destination = "/tmp/inventory"
   }
 
   provisioner "file" {
     source      = "okd-cluster.pem"
-    destination = "/root/okd-cluster.pem"
+    destination = "/tmp/okd-cluster.pem"
   }
 
   provisioner "file" {
     source      = "/tmp/credentials"
-    destination = "/root/.aws/credentials"
+    destination = "/home/centos/.aws/credentials"
   }
 
 }
@@ -113,7 +113,7 @@ resource "null_resource" "deploy_okd_cluster" {
 
   connection {
     type = "ssh"
-    user = "root"
+    user = "cenots"
     host = "${aws_instance.master_ec2[0].public_dns}"
     private_key = "${file("okd-cluster.pem")}"
   }
@@ -121,20 +121,20 @@ resource "null_resource" "deploy_okd_cluster" {
   provisioner "remote-exec" {
     inline = [
      "chmod 400 /root/okd-cluster.pem",      
-     "ansible-playbook -i /root/inventory /openshift-ansible/playbooks/prerequisites.yml --key-file /root/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
+     "ansible-playbook -i /tmp/inventory /openshift-ansible/playbooks/prerequisites.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
     ]
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod 400 /root/okd-cluster.pem",
-      "ansible-playbook -i /root/inventory /openshift-ansible/playbooks/deploy_cluster.yml --key-file /root/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
+      "chmod 400 /tmp/okd-cluster.pem",
+      "ansible-playbook -i /tmp/inventory /openshift-ansible/playbooks/deploy_cluster.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
     ]
   }
 
   provisioner "remote-exec" {
     inline = [
-      "aws s3 cp /root/.kube/config s3://okd-cluster-state/"
+      "aws s3 cp /home/centos/.kube/config s3://okd-cluster-state/"
     ]
   }
 }
