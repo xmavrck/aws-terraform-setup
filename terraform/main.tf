@@ -14,7 +14,8 @@ resource "aws_instance" "master_ec2" {
      Environment  = "${var.Environment}"
      Service      = "${var.Service}"
      type         = "master"
-     "kubernetes.io/cluster/OKD-3.11" = "owned"     
+     "kubernetes.io/cluster/OKD-3.11" = "owned"
+     Name = "Okd-Master"
   }
 }
 
@@ -40,6 +41,7 @@ resource "aws_instance" "node_ec2" {
      Service      = "${var.Service}"
      type         = "node"
      "kubernetes.io/cluster/OKD-3.11" = "owned"
+     Name = "Okd-Compute-Node"
   }
 }
 
