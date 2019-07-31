@@ -14,6 +14,13 @@ resource "aws_security_group" "saleshero" {
     to_port     = 8443
     cidr_blocks = ["${var.ingress_cidr_blocks}"]
   }
+  
+    ingress {
+    protocol    = "${var.ingress_protocol}"
+    from_port   = 31099
+    to_port     = 31099
+    cidr_blocks = ["${var.ingress_cidr_blocks}"]
+  }
 
   ingress {
     protocol    = -1
