@@ -121,14 +121,14 @@ resource "null_resource" "deploy_okd_cluster" {
   provisioner "remote-exec" {
     inline = [
      "chmod 400 /tmp/okd-cluster.pem",      
-     "ansible-playbook -i /tmp/inventory /openshift-ansible/playbooks/prerequisites.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
+     "ansible-playbook -i /tmp/inventory /home/centos/openshift-ansible/playbooks/prerequisites.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
     ]
   }
 
   provisioner "remote-exec" {
     inline = [
       "chmod 400 /tmp/okd-cluster.pem",
-      "ansible-playbook -i /tmp/inventory /openshift-ansible/playbooks/deploy_cluster.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
+      "ansible-playbook -i /tmp/inventory /home/centos/openshift-ansible/playbooks/deploy_cluster.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
     ]
   }
 
