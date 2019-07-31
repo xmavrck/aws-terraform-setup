@@ -120,7 +120,7 @@ resource "null_resource" "deploy_okd_cluster" {
 
   provisioner "remote-exec" {
     inline = [
-     "chmod 400 /root/okd-cluster.pem",      
+     "chmod 400 /tmp/okd-cluster.pem",      
      "ansible-playbook -i /tmp/inventory /openshift-ansible/playbooks/prerequisites.yml --key-file /tmp/okd-cluster.pem --ssh-extra-args='-o StrictHostKeyChecking=no'"
     ]
   }
